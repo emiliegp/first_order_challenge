@@ -1,5 +1,6 @@
 /*
 Notes:
+What does a story include?
     - list of characters
     - types of stories (general plot)
     - what the characters do
@@ -9,11 +10,11 @@ Notes:
 
 Making up our Mystery Story:
     Characters:
-        1. Villian 
+        1. Victim 
         2. Hero
         3. Suspect  
         Character Relations;
-            - filler characters that all fall into one of the above catagories 
+            - characters  all fall into one of the above catagories 
             - all villians are related to the victim in some way
             - no hero is related to the villian 
 
@@ -30,3 +31,58 @@ Making up our Mystery Story:
         - the suspects are all capable of doing something to a victim but not
             all suspects commited crimes   
 */
+
+% Facts
+suspect(emilie).
+suspect(evan).
+hero(crystal).
+is_dead(john).
+wife(emilie).
+leaves_weapon(evan).
+napping(emilie).
+friends(emilie, crystal, john).
+at_home(john).
+at_home(emilie).
+is_related(john, evan).
+looks_guilty(emilie).
+owns_weapon(evan).
+owns_weapon(john).
+owns_weapon(emilie).
+cooking(crystal).
+
+%Rules of Major Conflict 
+% #1: Any suspect who leaves a murder weapon is a murder.
+murder(X) :-
+    leaves_weapon(X); suspect(X), access_to_weapon(X), \+busy(X).
+
+% #2: Any one who is napping or not at home is busy.
+busy(X) :-
+    napping(X); cooking(X).
+
+% #3: You have an alibi if you are busy.
+has_alibi(X) :-
+    busy(X); victim(X).
+
+% #4: The hero suspects anyone in the room or who leaves a weapon
+hero_suspects(X) :- 
+    in_room(X);leaves_weapon(X).
+
+% #5: Anyone at home was in the room of the murder
+in_room(X) :- 
+    at_home(X).
+
+% #5: Anyone at home lives together 
+live_together(X, Y, Z) :- 
+    at_home(X), at_home(Y), at_home(Z).
+
+% #5: Anyone who lives togethr are friends 
+friends(X, Y, Z) :- 
+    live_together(X, Y, Z).
+
+% #6: Anyone at home lives together 
+access_to_weapon(X):-
+    owns_weapon(X); at_home(X); looks_guilty(X).
+
+% #7: Anyone who is dead is the vicitm
+victim(X):-
+    is_dead(X).
