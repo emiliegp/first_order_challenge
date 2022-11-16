@@ -87,6 +87,5 @@ friends(X, Y, Z) :-
 victim(X):-
     is_dead(X).
 
-% Hero's path of deduction'
 
 
