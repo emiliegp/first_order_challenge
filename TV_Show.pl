@@ -1,11 +1,12 @@
 /*
 Notes:
-What does a story include?
+Group Discussion 
+What does a story include? and what makes it interesting? 
     - list of characters
     - types of stories (general plot)
-    - what the characters do
-    - the charcters relationship with each other
-    - the environment characters are in 
+    - actions for the characters to do
+    - the charcters have relationship with each other
+    - the environment the characters are in allows for overlap 
     - major conflict
 
 Making up our Mystery Story:
@@ -14,14 +15,13 @@ Making up our Mystery Story:
         2. Hero
         3. Suspect  
         Character Relations;
-            - characters  all fall into one of the above catagories 
+            - characters all fall into one of the above catagories 
             - all villians are related to the victim in some way
-            - no hero is related to the villian 
 
     Setting:
         - incorperate overlapping layers so that certain queries can result in
             both the hero/victim/suspect being associated with a place
-                ex. the vcitim and hero live in the same house
+                ex. the victim and hero live in the same house
     
     Genral Plot:
         - verbs that apply to areas of the setting 
@@ -57,11 +57,11 @@ murder(X) :-
 
 % #2: Anyone who owns a weapon, was at home, or looks guilty has access to weapon
 access_to_weapon(X):-
-    owns_weapon(X); at_home(X).
+    owns_weapon(X); at_home(X); looks_guilty(emilie).
 
 % #3: Any one who is napping or cooking, or not at home is busy.
 busy(X) :-
-    napping(X); cooking(X);  \+at_home(X).
+    napping(X); cooking(X); \+at_home(X).
 
 % #4: You have an alibi if you are busy or if dead.
 has_alibi(X) :-
@@ -73,7 +73,7 @@ hero_suspects(X) :-
 
 % #6: Anyone at home who wasn't napping or cooking, 
 in_room(X) :- 
-    at_home(X), +\busy(X).
+    at_home(X), \+busy(X).
 
 % #7: Anyone at home lives together 
 live_together(X, Y, Z) :- 
@@ -87,5 +87,14 @@ friends(X, Y, Z) :-
 victim(X):-
     is_dead(X).
 
+/*
+Queries 
+?- victim(X). --> john
+?- findall(X, in_room(X), Bag). --> Bag=[john]
+?- access_to_weapon(X); hero_suspects(X) --> [evan]
+?- has_alibi(X), access_to_weapon(X). --> [emilie]
+?- findall(X, at_home(X), Bag). --> [emilie, john]
+?- findall(X, murder(X), Bag). --> Bag=[evan]
+*/
 
 
