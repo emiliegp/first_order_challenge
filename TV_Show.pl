@@ -1,4 +1,8 @@
 /*
+Evan Albers & Emilie Grand'Pierre
+Compuational Creativity PQ3
+November 15, 2022
+
 Notes:
 Group Discussion 
 What does a story include? and what makes it interesting? 
@@ -92,8 +96,8 @@ Queries
 ?- victim(X). --> john
 ?- findall(X, in_room(X), Bag). --> Bag=[john]
 ?- has_alibi(X), access_to_weapon(X). --> [emilie]
-?- looks_guilty(emilie). --> True.
-?- findall(X, at_home(X), Bag). --> [emilie, john]
+?- findall(X, at_home(X), Bag). --> Bag=[emilie, john]
+?- looks_guilty(emilie). --> True
 ?- access_to_weapon(X); hero_suspects(X) --> [evan]
 ?- findall(X, murder(X), Bag). --> Bag=[evan]
 */
