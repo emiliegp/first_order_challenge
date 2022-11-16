@@ -51,38 +51,42 @@ owns_weapon(emilie).
 cooking(crystal).
 
 %Rules of Major Conflict 
-% #1: Any suspect who leaves a murder weapon is a murder.
+% #1: if left their weapon, or is a suspect with access to weapon, and was in room, they are the murderer
 murder(X) :-
-    leaves_weapon(X); suspect(X), access_to_weapon(X), \+busy(X).
+    leaves_weapon(X); suspect(X), access_to_weapon(X), in_room(X).
 
-% #2: Any one who is napping or not at home is busy.
+% #2: Anyone who owns a weapon, was at home, or looks guilty has access to weapon
+access_to_weapon(X):-
+    owns_weapon(X); at_home(X).
+
+% #3: Any one who is napping or cooking, or not at home is busy.
 busy(X) :-
-    napping(X); cooking(X).
+    napping(X); cooking(X);  \+at_home(X).
 
-% #3: You have an alibi if you are busy.
+% #4: You have an alibi if you are busy or if dead.
 has_alibi(X) :-
     busy(X); victim(X).
 
-% #4: The hero suspects anyone in the room or who leaves a weapon
+% #5: The hero suspects anyone in the room or who leaves a weapon
 hero_suspects(X) :- 
-    in_room(X);leaves_weapon(X).
+    in_room(X); access_to_weapon(X).
 
-% #5: Anyone at home was in the room of the murder
+% #6: Anyone at home who wasn't napping or cooking, 
 in_room(X) :- 
-    at_home(X).
+    at_home(X), +\busy(X).
 
-% #5: Anyone at home lives together 
+% #7: Anyone at home lives together 
 live_together(X, Y, Z) :- 
     at_home(X), at_home(Y), at_home(Z).
 
-% #5: Anyone who lives togethr are friends 
+% #8: Anyone who lives together are friends 
 friends(X, Y, Z) :- 
     live_together(X, Y, Z).
 
-% #6: Anyone at home lives together 
-access_to_weapon(X):-
-    owns_weapon(X); at_home(X); looks_guilty(X).
-
-% #7: Anyone who is dead is the vicitm
+% #9: Anyone who is dead is the vicitm
 victim(X):-
     is_dead(X).
+
+% Hero's path of deduction'
+
+
