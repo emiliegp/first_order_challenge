@@ -91,9 +91,10 @@ victim(X):-
 Queries 
 ?- victim(X). --> john
 ?- findall(X, in_room(X), Bag). --> Bag=[john]
-?- access_to_weapon(X); hero_suspects(X) --> [evan]
 ?- has_alibi(X), access_to_weapon(X). --> [emilie]
+?- looks_guilty(emilie). --> True.
 ?- findall(X, at_home(X), Bag). --> [emilie, john]
+?- access_to_weapon(X); hero_suspects(X) --> [evan]
 ?- findall(X, murder(X), Bag). --> Bag=[evan]
 */
 
